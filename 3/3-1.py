@@ -7,7 +7,7 @@ with open("./3/input.txt", "r") as file:
     for i, line in enumerate(grid):
         for match in re.finditer(r"(\d)+", line):
             start, end = match.span()
-            if start - 1 >= 0 and grid[i][start -1 ] != '.' and not grid[i][start - 1].isdigit():
+            if start - 1 >= 0 and grid[i][start - 1] != '.' and not grid[i][start - 1].isdigit():
                 sum += int(match.group())
             elif end < len(line) and grid[i][end] != '.' and not grid[i][end].isdigit():
                 sum += int(match.group())
