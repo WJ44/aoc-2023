@@ -5,15 +5,17 @@ connections_map = {
     (1, 0): ["|", "L", "J", "S"]
 }
 
-rotations = [(-1,-1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1)]
+def new_direction(direction, pipe):
+    if pipe == "J" or pipe == "F":
+        return (-direction[1], -direction[0])
+    elif pipe == "L" or pipe == "7":
+        return (direction[1], direction[0])
+    else:
+        return direction
 
 with open("./10/input.txt", "r") as file:
     grid = [[c for c in line.rstrip()] for line in file]
     clean_grid = [["." for c in range(len(grid[r]))] for r in range(len(grid))]
-
-    for row in grid:
-        print("".join(row))
-    print("----------")
 
     for row in range(len(grid)):
         for column in range(len(grid[row])):
@@ -44,31 +46,8 @@ with open("./10/input.txt", "r") as file:
     while position != start:
         pipe = grid[position[0]][position[1]]
         clean_grid[position[0]][position[1]] = pipe
-        if direction == (1, 0):
-            if pipe == "J":
-                direction = (0, -1)
-            elif pipe == "L":
-                direction = (0, 1)
-        elif direction == (0, 1):
-            if pipe == "7":
-                direction = (1, 0)
-            elif pipe == "J":
-                direction = (-1, 0)
-        elif direction == (-1, 0):
-            if pipe == "7":
-                direction = (0, -1)
-            elif pipe == "F":
-                direction = (0, 1)
-        elif direction == (0, -1):
-            if pipe == "F":
-                direction = (1, 0)
-            elif pipe == "L":
-                direction = (-1, 0)
+        direction = new_direction(direction, pipe)
         position = (position[0] + direction[0], position[1] + direction[1])
-
-    for row in clean_grid:
-        print("".join(row))
-    print("----------")
 
     start = None
     for r in range(len(clean_grid)):
@@ -85,26 +64,7 @@ with open("./10/input.txt", "r") as file:
     while position != start:
         insides = [(direction[1], -direction[0])]
         pipe = clean_grid[position[0]][position[1]]
-        if direction == (1, 0):
-            if pipe == "J":
-                direction = (0, -1)
-            elif pipe == "L":
-                direction = (0, 1)
-        elif direction == (0, 1):
-            if pipe == "7":
-                direction = (1, 0)
-            elif pipe == "J":
-                direction = (-1, 0)
-        elif direction == (-1, 0):
-            if pipe == "7":
-                direction = (0, -1)
-            elif pipe == "F":
-                direction = (0, 1)
-        elif direction == (0, -1):
-            if pipe == "F":
-                direction = (1, 0)
-            elif pipe == "L":
-                direction = (-1, 0)
+        direction = new_direction(direction, pipe)
         insides.append((direction[1], -direction[0]))
         for inside in insides:
             neighbour = clean_grid[position[0] + inside[0]][position[1] + inside[1]]
@@ -119,9 +79,5 @@ with open("./10/input.txt", "r") as file:
                         for offset in connections_map.keys():
                             fronts.append((front[0] + offset[0], front[1] + offset[1]))
         position = (position[0] + direction[0], position[1] + direction[1])
-
-    for row in clean_grid:
-        print("".join(row))
-    print("----------")
 
     print(count)
