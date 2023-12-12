@@ -18,8 +18,12 @@ sum = 0
 with open("./12/input.txt", "r") as file:
     for line in file:
         line = line.rstrip()
+        print(line)
         springs, groups = line.split()
         groups = [int(group) for group in groups.split(",")]
+        groups = groups*5
+        springs = ((springs + "?")*5)[:-1]
+        print(springs)
         regex = "[.]*"
         for group in groups:
             regex = regex + "([#]{" + str(group) + "})[.]+"
