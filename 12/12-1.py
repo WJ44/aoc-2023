@@ -1,4 +1,4 @@
-import regex as re
+import re
 
 def explore(string, unknowns, regex, regex2):
     if not re.fullmatch(regex2, string):

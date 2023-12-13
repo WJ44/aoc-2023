@@ -1,38 +1,32 @@
-import regex as re
+import re
+from itertools import combinations_with_replacement, permutations
 
-def explore(string, unknowns, regex, regex2):
-    if not re.fullmatch(regex2, string):
-        return 0
-    if not unknowns:
-        if re.fullmatch(regex, string):
-            return 1
-        else:
-            return 0
-    sum = 0
-    unknown = unknowns.pop()
-    sum += explore(string[:unknown] + "." + string[unknown+1:], unknowns.copy(), regex, regex2)
-    sum += explore(string[:unknown] + "#" + string[unknown+1:], unknowns.copy(), regex, regex2)
-    return sum
-
-sum = 0
-with open("./12/input.txt", "r") as file:
+arrangements = 0
+with open("./12/test.txt", "r") as file:
     for line in file:
         line = line.rstrip()
         print(line)
         springs, groups = line.split()
         groups = [int(group) for group in groups.split(",")]
-        groups = groups*5
-        springs = ((springs + "?")*5)[:-1]
-        print(springs)
-        regex = "[.]*"
-        for group in groups:
-            regex = regex + "([#]{" + str(group) + "})[.]+"
-        regex = regex[:len(regex) - 1] + "*"
-        regex2 = "[.?]*"
-        for group in groups:
-            regex2 = regex2 + "([#?]{" + str(group) + "})[.?]+"
-        regex2 = regex2[:len(regex2) - 1] + "*"
-        unknowns = [i for i, c in enumerate(springs) if c == "?"]
-        sum += explore(springs, unknowns, regex, regex2)
+        springs = [s for s in springs.split(".") if s]
+        #TODO all possible ways to split the groups over de different parts of the springs
+        splits = [item for permutation in [set(permutations(combination)) for combination in combinations_with_replacement(range(len(groups)+1), len(springs))if sum(combination) == len(groups)] for item in permutation]
+        print(splits)
+        subtotal = 0
+        for s in splits:
+            groups_per_split = []
+            i = 0
+            for split in s:
+                groups_per_split.append(groups[i:i+split])
+                i += split
+            print(groups_per_split)
+            if any([sum(groups_per_split[j])+len(groups_per_split[j])-1 > len(springs[j]) for j in range(len(springs))]):
+                continue
+            for group in groups_per_split:
+                #TODO amount of ways to put the correct division of #s in the corresponding split
 
-print(sum)
+            subtotal += 1
+        print(subtotal)
+
+        
+print(arrangements)
