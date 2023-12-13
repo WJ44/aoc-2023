@@ -18,11 +18,14 @@ def explore(string, unknowns, regex, regex2):
     return sum
 
 sum = 0
-with open("./12/input.txt", "r") as file:
+with open("./12/test.txt", "r") as file:
     for line in file:
         line = line.rstrip()
+        print(line)
         springs, groups = line.split()
         groups = [int(group) for group in groups.split(",")]
+        groups = groups*2
+        springs = ((springs + "?")*2)[:-1]
         regex = "[.]*"
         for group in groups:
             regex = regex + "([#]{" + str(group) + "})[.]+"
@@ -32,6 +35,7 @@ with open("./12/input.txt", "r") as file:
             regex2 = regex2 + "([#?]{" + str(group) + "})[.?]+"
         regex2 = regex2[:len(regex2) - 1] + "*"
         unknowns = [i for i, c in enumerate(springs) if c == "?"]
+        print(explore(springs, unknowns, regex, regex2))
         sum += explore(springs, unknowns, regex, regex2)
 
 print(sum, time.time() - start)
