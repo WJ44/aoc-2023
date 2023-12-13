@@ -65,7 +65,6 @@ with open("./12/input.txt", "r") as file:
             for way in ways:
                 subsubtotal *= way
             subtotal += subsubtotal
-        print(subtotal)
         arrangements += subtotal
         
 print(arrangements, time.time() - start)
