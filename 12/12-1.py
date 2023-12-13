@@ -1,7 +1,4 @@
 import re
-import time
-
-start = time.time()
 
 def explore(string, unknowns, regex, regex2):
     if not re.fullmatch(regex2, string):
@@ -38,4 +35,4 @@ with open("./12/test.txt", "r") as file:
         print(explore(springs, unknowns, regex, regex2))
         sum += explore(springs, unknowns, regex, regex2)
 
-print(sum, time.time() - start)
+print(sum)

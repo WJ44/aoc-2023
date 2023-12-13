@@ -1,22 +1,11 @@
 import regex as re
-from itertools import combinations_with_replacement, permutations
-import time
-
-start = time.time()
 
 known = {}
-
 def find_permutations(spring, groups):
     if not spring:
-        if not groups:
-            return 1
-        else:
-            return 0
+        return 1 if not groups else 0
     if not groups:
-        if not "#" in spring:
-            return 1
-        else:
-            return 0
+        return 1 if not "#" in spring else 0
     key = (spring, tuple(groups))
     if key in known:
         return known[key]
@@ -58,13 +47,10 @@ with open("./12/input.txt", "r") as file:
         subtotal = 0
         splits = find_splits(springs, [], 0, 0, groups)
         for split in splits:
-            ways = []
-            for i in range(len(springs)):
-                ways.append(find_permutations(springs[i], split[i].copy()))
             subsubtotal = 1
-            for way in ways:
-                subsubtotal *= way
+            for i in range(len(springs)):
+                subsubtotal *= find_permutations(springs[i], split[i].copy())
             subtotal += subsubtotal
         arrangements += subtotal
         
-print(arrangements, time.time() - start)
+print(arrangements)
