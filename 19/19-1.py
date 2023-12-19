@@ -1,8 +1,8 @@
 import re
 
 workflows = {}
-
-with open("./19/test.txt", "r") as file:
+accepted = []
+with open("./19/input.txt", "r") as file:
     while (line := file.readline().rstrip()) != "":
         name, instructions = re.match(r"(\w+){(.+)}", line).groups()
         instructions = instructions.split(",")
@@ -17,7 +17,6 @@ with open("./19/test.txt", "r") as file:
                 instruction = {"destination": instruction[0]}
             processed.append(instruction)
         workflows[name] = processed
-    print(workflows)
     while line := file.readline().rstrip():
         x, m, a, s = re.match(r"{x=(\d+),m=(\d+),a=(\d+),s=(\d+)}", line).groups()
         part = {"x": int(x), "m": int(m), "a": int(a), "s": int(s)}
@@ -25,10 +24,26 @@ with open("./19/test.txt", "r") as file:
         while True:
             for instruction in workflow:
                 if "condition" in instruction:
-                    if condition[2] == ">":
-                        print(part[condition[0]] > condition[2])
+                    condition = instruction["condition"]
+                    if condition[1] == ">":
+                        if part[condition[0]] > condition[2]:
+                            destination = instruction["destination"]
+                            break
                     else:
-                        print(part[condition[0]] < condition[2])
+                        if part[condition[0]] < condition[2]:
+                            destination = instruction["destination"]
+                            break
                 else:
-                    print(True)
+                    destination = instruction["destination"]
+            if destination == "R":
+                break
+            elif destination == "A":
+                accepted.append(part)
+                break
+            workflow = workflows[destination]
 
+total = 0
+for part in accepted:
+    total += sum(part.values())
+    
+print(total)
