@@ -26,6 +26,11 @@ with open("./17/input.txt", "r") as file:
     x_goal = len(grid[0]) - 1
     y_goal = len(grid) - 1
     #x, y, dx, dy, straight
+    start = (0, 0, 0, 1, 0)
+    entry = (h(start, x_goal, y_goal), start)
+    to_explore_entries[start] = entry
+    heappush(to_explore, entry)
+    g[start] = 0
     start = (0, 0, 1, 0, 0)
     entry = (h(start, x_goal, y_goal), start)
     to_explore_entries[start] = entry
