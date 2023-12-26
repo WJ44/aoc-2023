@@ -1,60 +1,64 @@
-from time import sleep
-
-to_explore = set()
-
 paths = [".", ">", "v", "<", "^"]
 
-def print_path(grid, path):
-    grid = grid.copy()
-    for x, y in path:
-        grid[y][x] = "O"
-    for row in grid:
-        print("".join(row))
-
-from time import time
-
-start_time = time()
-
-max_distance = 0
+graph = {}
 with open("./23/input.txt", "r") as file:
     grid = [[c for c in line.rstrip()] for line in file]
     for x, cell in enumerate(grid[0]):
         if cell == ".":
-            start = (x, 0, 0, 1)
+            start = (x, 0)
             break
     for x, cell in enumerate(grid[-1]):
         if cell == ".":
             end = (x, len(grid)-1)
             break
-    splits = {(start, -1, ())}
-    while splits:
-        # print(len(splits))
-        node, distance, visited = splits.pop()
-        to_explore = {node}
-        visited = set(visited)
-        visited.add((node[0], node[1]))
-        while to_explore:
+
+    to_explore = {(start[0], start[1], 0, 1)}
+    while to_explore:
+        node = to_explore.pop()
+        neighbours = {node}
+        distance = 0
+        while True:
+            x, y, dx, dy = neighbours.pop()
             distance += 1
-            x, y, dx, dy = to_explore.pop()
             if (x, y) == end:
-                max_distance = max(distance, max_distance)
-                print(max_distance)
-                continue
-            neighbours = set()
-            neighbour = (x + dx, y + dy)
-            if neighbour not in visited and grid[y + dy][x + dx] in paths:
+                if (node[0] - node[2], node[1] - node[3]) in graph:
+                    graph[(node[0] - node[2], node[1] - node[3])].add(((x, y), distance))
+                else:
+                    graph[(node[0] - node[2], node[1] - node[3])] = {((x, y), distance)}
+                break
+            if grid[y + dy][x + dx] in paths:
+                neighbour = (x + dx, y + dy)
                 neighbours.add((neighbour[0], neighbour[1], dx, dy))
-            neighbour = (x + dy, y + -dx)
-            if neighbour not in visited and grid[y + -dx][x + dy] in paths:
+            if grid[y + -dx][x + dy] in paths:
+                neighbour = (x + dy, y + -dx)
                 neighbours.add((neighbour[0], neighbour[1], dy, -dx))
-            neighbour = (x + -dy, y + dx)
-            if neighbour not in visited and grid[y + dx][x + -dy] in paths:
+            if grid[y + dx][x + -dy] in paths:
+                neighbour = (x + -dy, y + dx)
                 neighbours.add((neighbour[0], neighbour[1], -dy, dx))
             if len(neighbours) > 1:
-                for neighbour in neighbours:
-                    if not splits or all([other != neighbour or distance >= other_dist or (visited - set(other_visited) and not set(other_visited).issubset(visited)) for other, other_dist, other_visited in splits]):
-                        splits.add((neighbour, distance, tuple(visited)))
-            else:
-                to_explore.update(neighbours)
+                if (node[0] - node[2], node[1] - node[3]) in graph:
+                    graph[(node[0] - node[2], node[1] - node[3])].add(((x, y), distance))
+                else:
+                    graph[(node[0] - node[2], node[1] - node[3])] = {((x, y), distance)}
+                break
+        for neighbour in neighbours:
+            if (x, y) not in graph:
+                to_explore.add(neighbour)
 
-print(time() - start_time)
+for node, neighbours in graph.items():
+    for neighbour, distance in neighbours:
+        if neighbour != end:
+            graph[neighbour].add((node, distance))
+
+def explore(node, path, distance):
+    path = path.copy()
+    if node == end:
+        return distance
+    path.append(node)
+    max_distance = 0
+    for neighbour, dist in graph[node]:
+        if neighbour not in path:
+            max_distance = max(max_distance, explore(neighbour, path, distance + dist))
+    return max_distance
+
+print(explore((start[0], start[1] - 1), [], -1))
