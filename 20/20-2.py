@@ -1,5 +1,6 @@
 import re
 from collections import deque
+from math import lcm
 
 modules = {}
 states = {}
@@ -18,20 +19,20 @@ for name, (_, destinations) in modules.items():
         if destination in modules and modules[destination][0] == "&":
             states[destination][name] = -1
 
+periods = {}
 stack = deque()
-i = 0
+i = 1
 found = False
-from time import sleep
-while True:
-    i += 1
-    if found:
-        break
+while not found:
     stack.append(("broadcaster", -1, "button"))
     while stack:
         name, pulse, source = stack.popleft()
-        if name == "rx" and pulse == -1:
-            found = True
-            break
+        if name == "nc" and pulse == 1:
+            if source not in periods:
+                periods[source] = i
+            if all(module in periods for module in states[name].keys()):
+                found = True
+                break
         if name not in modules:
             continue
         type, destinations = modules[name]
@@ -47,7 +48,6 @@ while True:
             pulse = -1 if sum(states[name].values()) == len(states[name].values()) else 1
         if send:
             stack.extend((module, pulse, name) for module in destinations)
-    print(states["hr"])
-    sleep(0.01)
+    i += 1
 
-print(i)
+print(lcm(*periods.values()))
