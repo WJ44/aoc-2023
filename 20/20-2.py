@@ -4,7 +4,7 @@ from math import lcm
 
 modules = {}
 states = {}
-with open("./20/input.txt", "r") as file:
+with open("./20/input.txt", "r", encoding="utf-8") as file:
     for line in file:
         type, name, destinations = re.match(r"([%&]?)([a-z]+) -> (.*)", line).groups()
         destinations = destinations.split(", ")

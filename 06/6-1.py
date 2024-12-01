@@ -1,13 +1,13 @@
-product = 1
+total = 1
 
-with open("./6/input.txt", "r") as file:
+with open("./06/input.txt", "r", encoding="utf-8") as file:
     times = [int(time) for time in file.readline().split(":")[1].split()]
     distances = [int(distance) for distance in file.readline().split(":")[1].split()]
     for time, distance in zip(times, distances):
-        sum = 0
+        subtotal = 0
         for i in range(time + 1):
             if i * (time - i) > distance:
-                sum += 1
-        product *= sum
+                subtotal += 1
+        total *= subtotal
 
-print(product)
+print(total)

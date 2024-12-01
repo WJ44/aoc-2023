@@ -1,7 +1,7 @@
 start = (0, 0)
 rocks = set()
 
-with open("./21/input.txt", "r") as file:
+with open("./21/input.txt", "r", encoding="utf-8") as file:
     grid = [[c for c in line.rstrip()] for line in file]
     for y in range(len(grid)):
         for x in range(len(grid[y])):

@@ -1,4 +1,4 @@
-from heapq import heappush, heappop
+from heapq import heappop, heappush
 
 to_explore_entries = {}
 to_explore = []
@@ -21,7 +21,7 @@ def explore(current, dx, dy, straight):
             heappush(to_explore, entry)
 
 
-with open("./17/input.txt", "r") as file:
+with open("./17/input.txt", "r", encoding="utf-8") as file:
     grid = [[int(c) for c in line.rstrip()] for line in file]
     x_goal = len(grid[0]) - 1
     y_goal = len(grid) - 1

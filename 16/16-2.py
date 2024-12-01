@@ -1,5 +1,6 @@
 import sys
 
+
 def split(x, y, dx, dy, grid, visited, seen):
     while not (y < 0 or y >= len(grid)) and not (x < 0 or x >= len(grid[y])):
         if (x, y, dx, dy) in seen:
@@ -48,7 +49,7 @@ def start_count(x, y, dx, dy, grid):
     return len(visited)
 
 maximum = 0
-with open("./16/input.txt", "r") as file:
+with open("./16/input.txt", "r", encoding="utf-8") as file:
     grid = [[c for c in line.rstrip()] for line in file]
     for y in range(len(grid)):
         maximum = max(maximum, start_count(0, y, 1, 0, grid))

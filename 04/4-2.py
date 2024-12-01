@@ -2,12 +2,12 @@ import re
 
 total = 0
 
-with open("./4/input.txt", "r") as file:
+with open("./04/input.txt", "r", encoding="utf-8") as file:
     copies = {}
     for line in file:
         m = re.match(r"Card[\s]+(\d+):([\s\d+]+)\s\|([\s\d+]+)", line)
         card = int(m.group(1))
-        if not card in copies:
+        if card not in copies:
             copies[card] = 0
         copies[card] += 1
         wins = 0

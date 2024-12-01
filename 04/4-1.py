@@ -1,8 +1,8 @@
 import re
 
-sum = 0
+solution = 0
 
-with open("./4/input.txt", "r") as file:
+with open("./04/input.txt", "r", encoding="utf-8") as file:
     for line in file:
         m = re.match(r"Card[\s]+\d+:([\s\d+]+)\s\|([\s\d+]+)", line)
         winning = [int(i) for i in m.group(1).split()]
@@ -14,6 +14,6 @@ with open("./4/input.txt", "r") as file:
                     result = 1
                 else:
                     result *= 2
-        sum += result
+        solution += result
 
-print(sum)
+print(solution)

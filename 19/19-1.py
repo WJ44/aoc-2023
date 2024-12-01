@@ -2,7 +2,7 @@ import re
 
 workflows = {}
 accepted = []
-with open("./19/input.txt", "r") as file:
+with open("./19/input.txt", "r", encoding="utf-8") as file:
     while (line := file.readline().rstrip()) != "":
         name, instructions = re.match(r"(\w+){(.+)}", line).groups()
         instructions = instructions.split(",")

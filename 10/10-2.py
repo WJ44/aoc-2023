@@ -2,36 +2,49 @@ connections_map = {
     (-1, 0): ["|", "F", "7", "S"],
     (0, -1): ["-", "F", "L", "S"],
     (0, 1): ["-", "7", "J", "S"],
-    (1, 0): ["|", "L", "J", "S"]
+    (1, 0): ["|", "L", "J", "S"],
 }
 
-def new_direction(direction, pipe):
-    if pipe == "J" or pipe == "F":
-        return (-direction[1], -direction[0])
-    elif pipe == "L" or pipe == "7":
-        return (direction[1], direction[0])
-    else:
-        return direction
 
-with open("./10/input.txt", "r") as file:
+def new_direction(d, p):
+    if p in ["J", "F"]:
+        return (-d[1], -d[0])
+    if p in ["L", "7"]:
+        return (d[1], d[0])
+    return d
+
+
+with open("./10/input.txt", "r", encoding="utf-8") as file:
     grid = [[c for c in line.rstrip()] for line in file]
     clean_grid = [["." for c in range(len(grid[r]))] for r in range(len(grid))]
 
-    for row in range(len(grid)):
-        for column in range(len(grid[row])):
-            if grid[row][column] == "S":
+    start = (-1, -1)
+    for row, grid_row in enumerate(grid):
+        for column, grid_item in enumerate(grid_row):
+            if grid_item == "S":
                 possible = []
                 for offset, connections in connections_map.items():
                     r = row + offset[0]
                     c = column + offset[1]
-                    if r >= 0 and r < len(grid) and c >= 0 and c < len(grid[row]):
-                        if grid[r][c] in connections and grid[row][column] in connections_map[(-offset[0], -offset[1])]:
+                    if 0 <= r < len(grid) and 0 <= c < len(grid_row):
+                        if (
+                            grid[r][c] in connections
+                            and grid_item in connections_map[(-offset[0], -offset[1])]
+                        ):
                             if not possible:
-                                possible.extend(connections_map[(-offset[0], -offset[1])])
+                                possible.extend(
+                                    connections_map[(-offset[0], -offset[1])]
+                                )
                                 possible.remove("S")
                             else:
-                                pipe = (set(possible) & set(connections_map[(-offset[0], -offset[1])])).pop()
-                                grid[row][column] = (set(possible) & set(connections_map[(-offset[0], -offset[1])])).pop()
+                                pipe = (
+                                    set(possible)
+                                    & set(connections_map[(-offset[0], -offset[1])])
+                                ).pop()
+                                grid[row][column] = (
+                                    set(possible)
+                                    & set(connections_map[(-offset[0], -offset[1])])
+                                ).pop()
                                 start = (row, column)
                                 clean_grid[row][column] = pipe
 
@@ -50,9 +63,9 @@ with open("./10/input.txt", "r") as file:
         position = (position[0] + direction[0], position[1] + direction[1])
 
     start = None
-    for r in range(len(clean_grid)):
-        for c in range(len(clean_grid[r])):
-            if clean_grid[r][c] == "F":
+    for r, clean_grid_r in enumerate(clean_grid):
+        for c, clean_grid_item in enumerate(clean_grid_r):
+            if clean_grid_item == "F":
                 start = (r, c)
                 break
         if start:
@@ -76,7 +89,7 @@ with open("./10/input.txt", "r") as file:
                     if clean_grid[front[0]][front[1]] == ".":
                         clean_grid[front[0]][front[1]] = "I"
                         count += 1
-                        for offset in connections_map.keys():
+                        for offset in connections_map:
                             fronts.append((front[0] + offset[0], front[1] + offset[1]))
         position = (position[0] + direction[0], position[1] + direction[1])
 

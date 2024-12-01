@@ -1,5 +1,5 @@
 sum = 0
-with open("./13/input.txt", "r") as file:
+with open("./13/input.txt", "r", encoding="utf-8") as file:
     patterns = [pattern.split("\n") for pattern in file.read().split("\n\n")]
     for pattern in patterns:
         for i in range(1, len(pattern)):

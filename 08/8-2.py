@@ -6,7 +6,7 @@ network = {}
 start_nodes = []
 end_nodes = []
 
-with open("./8/input.txt", "r") as file:
+with open("./08/input.txt", "r", encoding="utf-8") as file:
     for line in file:
         if m := re.match(r"(\w+) = \((\w+), (\w+)\)", line):
             network[m.group(1)] = {
@@ -24,8 +24,8 @@ steps = 0
 intervals = [-1] * len(start_nodes)
 nodes = start_nodes.copy()
 while -1 in intervals:
-    for i in range(len(nodes)):
-        nodes[i] = network[nodes[i]][directions[steps % len(directions)]]
+    for i, node in enumerate(nodes):
+        nodes[i] = network[node][directions[steps % len(directions)]]
         if nodes[i][2] == "Z":
             if intervals[i] == -1:
                 intervals[i] = steps + 1

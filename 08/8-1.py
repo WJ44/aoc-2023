@@ -3,7 +3,7 @@ import re
 directions = ""
 network = {}
 
-with open("./8/input.txt", "r") as file:
+with open("./08/input.txt", "r", encoding="utf-8") as file:
     for line in file:
         if m := re.match(r"(\w+) = \((\w+), (\w+)\)", line):
             network[m.group(1)] = {

@@ -1,5 +1,5 @@
 seen = {}
-with open("./14/input.txt", "r") as file:
+with open("./14/input.txt", "r", encoding="utf-8") as file:
     grid = [[c for c in line.rstrip()] for line in file]
     grid = [list(row) for row in zip(*grid)][::-1]
     k = 0

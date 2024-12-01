@@ -4,7 +4,7 @@ part_of_brick = {}
 supported_by = {}
 snapshot = []
 
-with open("./22/input.txt", "r") as file:
+with open("./22/input.txt", "r", encoding="utf-8") as file:
     for line in file:
         coord1, coord2 = line.split("~")
         x1, y1, z1 = [int(i) for i in coord1.split(",")]

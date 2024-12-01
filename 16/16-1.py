@@ -43,7 +43,7 @@ def split(x, y, dx, dy, grid, visited):
                 x += dx
 
 visited = set()
-with open("./16/input.txt", "r") as file:
+with open("./16/input.txt", "r", encoding="utf-8") as file:
     grid = [[c for c in line.rstrip()] for line in file]
     split(0, 0, 1, 0, grid, visited)
 

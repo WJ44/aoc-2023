@@ -1,4 +1,5 @@
 import re
+
 from tqdm import tqdm
 
 direction_map = {
@@ -13,7 +14,7 @@ y = 0
 
 instructions = []
 
-with open("./18/input.txt", "r") as file:
+with open("./18/input.txt", "r", encoding="utf-8") as file:
     for line in file:
         distance, direction = re.match(r"[URDL] \d+ \(#(\w{5})(\w)\)", line).groups()
         distance = int(distance, 16)

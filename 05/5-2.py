@@ -2,7 +2,7 @@ import re
 
 seeds = []
 
-with open("./5/input.txt", "r") as file:
+with open("./05/input.txt", "r", encoding="utf-8") as file:
     source = ""
     destination = ""
     for line in file:

@@ -1,7 +1,11 @@
 calibration_sum = 0
 
-with open("./1/input.txt", "r") as file:
+digits = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+
+with open("./01/input.txt", "r", encoding="utf-8") as file:
     for line in file:
+        for digit, text in enumerate(digits, 1):
+            line = line.replace(text, text + str(digit) + text)
         first = ""
         last = ""
         for c in line:

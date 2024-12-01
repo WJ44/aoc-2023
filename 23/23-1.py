@@ -10,7 +10,7 @@ slopes = {
     (0, -1): "^"
 }
 
-with open("./23/input.txt", "r") as file:
+with open("./23/input.txt", "r", encoding="utf-8") as file:
     grid = [[c for c in line.rstrip()] for line in file]
     for x, cell in enumerate(grid[0]):
         if cell == ".":

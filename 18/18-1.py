@@ -16,7 +16,7 @@ y = 0
 
 instructions = []
 
-with open("./18/input.txt", "r") as file:
+with open("./18/input.txt", "r", encoding="utf-8") as file:
     for line in file:
         direction, distance, color = re.match(r"([URDL]) (\d+) \(#(\w+)\)", line).groups()
         distance = int(distance)

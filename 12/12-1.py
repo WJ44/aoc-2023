@@ -1,5 +1,6 @@
 import re
 
+
 def explore(string, unknowns, regex, regex2):
     if not re.fullmatch(regex2, string):
         return 0

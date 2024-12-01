@@ -1,8 +1,8 @@
-from random import choices, choice
+from random import choice, choices
 
 start_graph = {}
 
-with open("./25/input.txt", "r") as file:
+with open("./25/input.txt", "r", encoding="utf-8") as file:
     for line in file:
         vertex, neighbours = line.rstrip().split(":")
         neighbours = neighbours.split()

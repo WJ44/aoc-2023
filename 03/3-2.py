@@ -1,6 +1,6 @@
 import re
 
-sum = 0
+solution = 0
 gears = {}
 
 def process_gear(gear):
@@ -9,7 +9,7 @@ def process_gear(gear):
     else:
         gears[gear] = [int(match.group())]
 
-with open("./3/input.txt", "r") as file:
+with open("./03/input.txt", "r", encoding="utf-8") as file:
     grid = [line.rstrip() for line in file]
     for i, line in enumerate(grid):
         for match in re.finditer(r"(\d)+", line):
@@ -25,10 +25,10 @@ with open("./3/input.txt", "r") as file:
                     if i - 1 >= 0 and grid[i-1][j] == '*':
                         process_gear((i-1, j))
                     elif i + 1 < len(grid) and grid[i+1][j] == '*':
-                        process_gear(gear = (i+1, j))
+                        process_gear((i+1, j))
 
-for gear in gears.values():
-    if len(gear) == 2:
-        sum += gear[0] * gear[1]
+for g in gears.values():
+    if len(g) == 2:
+        solution += g[0] * g[1]
 
-print(sum)
+print(solution)

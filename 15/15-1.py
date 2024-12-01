@@ -1,5 +1,5 @@
 sum = 0
-with open("./15/input.txt", "r") as file:
+with open("./15/input.txt", "r", encoding="utf-8") as file:
     sequence = [line.rstrip() for line in file][0].split(",")
     for step in sequence:
         result = 0

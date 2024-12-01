@@ -6,12 +6,12 @@ maximum = {
     'blue': 14
 }
 
-sum = 0
+solution = 0
 
-with open("./2/input.txt", "r") as file:
+with open("./02/input.txt", "r", encoding="utf-8") as file:
     for line in file:
         m = re.match(r"Game (?P<id>\d+):(?P<game>.*)", line)
-        id = int(m['id'])
+        identifier = int(m['id'])
         grabs = m['game'].split(";")
         impossible = False
         for grab in grabs:
@@ -23,6 +23,6 @@ with open("./2/input.txt", "r") as file:
                     impossible = True
                     break
         if not impossible:
-            sum += id
+            solution += identifier
 
-print(sum)
+print(solution)

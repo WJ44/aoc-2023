@@ -2,7 +2,7 @@ from itertools import combinations
 
 equations = []
 
-with open("./24/input.txt", "r") as file:
+with open("./24/input.txt", "r", encoding="utf-8") as file:
     for line in file:
         position, velocity = line.split(" @ ")
         px, py, pz = position.split(", ")

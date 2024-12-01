@@ -1,8 +1,8 @@
 import re
 
-sum = 0
+solution = 0
 
-with open("./2/input.txt", "r") as file:
+with open("./02/input.txt", "r", encoding="utf-8") as file:
     for line in file:
         cubes = {
             'red': None,
@@ -10,7 +10,7 @@ with open("./2/input.txt", "r") as file:
             'blue': None
         }
         m = re.match(r"Game (?P<id>\d+):(?P<game>.*)", line)
-        id = int(m['id'])
+        identifier = int(m['id'])
         grabs = m['game'].split(";")
         for grab in grabs:
             colors = re.findall(r"(\d+) ([a-z]+)", grab)
@@ -24,6 +24,6 @@ with open("./2/input.txt", "r") as file:
         for color in cubes.values():
             if color:
                 power *= color
-        sum += power
+        solution += power
 
-print(sum)
+print(solution)
