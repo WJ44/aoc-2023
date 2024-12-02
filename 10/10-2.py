@@ -15,7 +15,7 @@ def new_direction(d, p):
 
 
 with open("./10/input.txt", "r", encoding="utf-8") as file:
-    grid = [[c for c in line.rstrip()] for line in file]
+    grid = [list(line.rstrip()) for line in file]
     clean_grid = [["." for c in range(len(grid[r]))] for r in range(len(grid))]
 
     start = (-1, -1)
@@ -27,23 +27,14 @@ with open("./10/input.txt", "r", encoding="utf-8") as file:
                     r = row + offset[0]
                     c = column + offset[1]
                     if 0 <= r < len(grid) and 0 <= c < len(grid_row):
-                        if (
-                            grid[r][c] in connections
-                            and grid_item in connections_map[(-offset[0], -offset[1])]
-                        ):
+                        if grid[r][c] in connections and grid_item in connections_map[(-offset[0], -offset[1])]:
                             if not possible:
-                                possible.extend(
-                                    connections_map[(-offset[0], -offset[1])]
-                                )
+                                possible.extend(connections_map[(-offset[0], -offset[1])])
                                 possible.remove("S")
                             else:
-                                pipe = (
-                                    set(possible)
-                                    & set(connections_map[(-offset[0], -offset[1])])
-                                ).pop()
+                                pipe = (set(possible) & set(connections_map[(-offset[0], -offset[1])])).pop()
                                 grid[row][column] = (
-                                    set(possible)
-                                    & set(connections_map[(-offset[0], -offset[1])])
+                                    set(possible) & set(connections_map[(-offset[0], -offset[1])])
                                 ).pop()
                                 start = (row, column)
                                 clean_grid[row][column] = pipe

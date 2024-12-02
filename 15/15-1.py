@@ -1,4 +1,4 @@
-sum = 0
+total = 0
 with open("./15/input.txt", "r", encoding="utf-8") as file:
     sequence = [line.rstrip() for line in file][0].split(",")
     for step in sequence:
@@ -7,6 +7,6 @@ with open("./15/input.txt", "r", encoding="utf-8") as file:
             result += ord(c)
             result *= 17
             result %= 256
-        sum += result
+        total += result
 
-print(sum)
+print(total)

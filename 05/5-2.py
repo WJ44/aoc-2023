@@ -15,7 +15,7 @@ with open("./05/input.txt", "r", encoding="utf-8") as file:
             while to_process:
                 seed = to_process.pop()
                 length = seed["length"]
-                if not(seed[source] + seed["length"] <= source_start or seed[source] >= source_end):
+                if not (seed[source] + seed["length"] <= source_start or seed[source] >= source_end):
                     if seed[source] >= source_start and seed[source] + length <= source_end:
                         seed[destination] = destination_start + (seed[source] - source_start)
                         seeds.append(seed)

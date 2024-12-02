@@ -9,15 +9,12 @@ end_nodes = []
 with open("./08/input.txt", "r", encoding="utf-8") as file:
     for line in file:
         if m := re.match(r"(\w+) = \((\w+), (\w+)\)", line):
-            network[m.group(1)] = {
-                "L": m.group(2),
-                "R": m.group(3)
-            }
+            network[m.group(1)] = {"L": m.group(2), "R": m.group(3)}
             if re.match(r"\w+A", m.group(1)):
                 start_nodes.append(m.group(1))
             elif re.match(r"\w+Z", m.group(1)):
                 end_nodes.append(m.group(1))
-        elif m:= re.match(r"\w+", line):
+        elif m := re.match(r"\w+", line):
             directions = m.group()
 
 steps = 0

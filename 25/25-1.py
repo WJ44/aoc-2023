@@ -32,9 +32,9 @@ while not found:
         del graph[neighbour]
 
     count = 1
-    for vertex in graph:
-        if len(graph[vertex]) == 3:
+    for vertex, neighbours in graph.items():
+        if len(neighbours) == 3:
             found = True
-        count *= len(vertex)//3
+        count *= len(vertex) // 3
 
 print(count)

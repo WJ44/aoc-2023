@@ -2,14 +2,14 @@ paths = [".", ">", "v", "<", "^"]
 
 graph = {}
 with open("./23/input.txt", "r", encoding="utf-8") as file:
-    grid = [[c for c in line.rstrip()] for line in file]
+    grid = [list(line.rstrip()) for line in file]
     for x, cell in enumerate(grid[0]):
         if cell == ".":
             start = (x, 0)
             break
     for x, cell in enumerate(grid[-1]):
         if cell == ".":
-            end = (x, len(grid)-1)
+            end = (x, len(grid) - 1)
             break
 
     to_explore = {(start[0], start[1], 0, 1)}
@@ -50,15 +50,17 @@ for node, neighbours in graph.items():
         if neighbour != end:
             graph[neighbour].add((node, distance))
 
-def explore(node, path, distance):
+
+def explore(n, path, prev_distance):
     path = path.copy()
-    if node == end:
-        return distance
-    path.append(node)
+    if n == end:
+        return prev_distance
+    path.append(n)
     max_distance = 0
-    for neighbour, dist in graph[node]:
-        if neighbour not in path:
-            max_distance = max(max_distance, explore(neighbour, path, distance + dist))
+    for neighb, dist in graph[n]:
+        if neighb not in path:
+            max_distance = max(max_distance, explore(neighb, path, prev_distance + dist))
     return max_distance
+
 
 print(explore((start[0], start[1] - 1), [], -1))

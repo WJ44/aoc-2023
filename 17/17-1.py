@@ -4,19 +4,21 @@ to_explore_entries = {}
 to_explore = []
 g = {}
 
-def h(node, x_goal, y_goal):
+
+def h(node):
     return x_goal - node[0] + y_goal - node[1]
 
-def explore(current, dx, dy, straight):
-    neighbour = (current[0] + dx, current[1] + dy, dx, dy, straight)
+
+def explore(current_entries, dx, dy, straight):
+    neighbour = (current_entries[0] + dx, current_entries[1] + dy, dx, dy, straight)
     if neighbour[0] >= 0 and neighbour[0] <= x_goal and neighbour[1] >= 0 and neighbour[1] <= y_goal:
-        new_g = g[current] + grid[neighbour[1]][neighbour[0]]
+        new_g = g[current_entries] + grid[neighbour[1]][neighbour[0]]
         if neighbour not in g or new_g < g[neighbour]:
             g[neighbour] = new_g
             if neighbour in to_explore_entries:
                 entry = to_explore_entries.pop(neighbour)
                 entry[1] = None
-            entry = (new_g + h(neighbour, x_goal, y_goal), neighbour)
+            entry = (new_g + h(neighbour), neighbour)
             to_explore_entries[neighbour] = entry
             heappush(to_explore, entry)
 
@@ -25,11 +27,11 @@ with open("./17/input.txt", "r", encoding="utf-8") as file:
     grid = [[int(c) for c in line.rstrip()] for line in file]
     x_goal = len(grid[0]) - 1
     y_goal = len(grid) - 1
-    #x, y, dx, dy, straight
+    # x, y, dx, dy, straight
     start = (0, 0, 1, 0, 0)
-    entry = (h(start, x_goal, y_goal), start)
-    to_explore_entries[start] = entry
-    heappush(to_explore, entry)
+    start_entry = (h(start), start)
+    to_explore_entries[start] = start_entry
+    heappush(to_explore, start_entry)
     g[start] = 0
     while to_explore:
         current = None

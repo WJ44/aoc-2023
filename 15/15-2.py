@@ -13,10 +13,7 @@ with open("./15/input.txt", "r", encoding="utf-8") as file:
             box *= 17
             box %= 256
         if box not in boxes:
-            boxes[box] = {
-                "labels": [],
-                "focal_lengths": []
-            }
+            boxes[box] = {"labels": [], "focal_lengths": []}
         if label in boxes[box]["labels"]:
             i = boxes[box]["labels"].index(label)
             if not focal_length:
@@ -25,8 +22,8 @@ with open("./15/input.txt", "r", encoding="utf-8") as file:
             else:
                 boxes[box]["focal_lengths"][i] = int(focal_length)
         elif focal_length:
-             boxes[box]["labels"].append(label)
-             boxes[box]["focal_lengths"].append(int(focal_length))
+            boxes[box]["labels"].append(label)
+            boxes[box]["focal_lengths"].append(int(focal_length))
 
 focusing_power = 0
 for number, box in boxes.items():

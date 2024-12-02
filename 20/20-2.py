@@ -6,12 +6,12 @@ modules = {}
 states = {}
 with open("./20/input.txt", "r", encoding="utf-8") as file:
     for line in file:
-        type, name, destinations = re.match(r"([%&]?)([a-z]+) -> (.*)", line).groups()
+        kind, name, destinations = re.match(r"([%&]?)([a-z]+) -> (.*)", line).groups()
         destinations = destinations.split(", ")
-        modules[name] = (type, destinations)
-        if type == "%":
+        modules[name] = (kind, destinations)
+        if kind == "%":
             states[name] = -1
-        elif type == "&":
+        elif kind == "&":
             states[name] = {}
 
 for name, (_, destinations) in modules.items():
@@ -35,15 +35,15 @@ while not found:
                 break
         if name not in modules:
             continue
-        type, destinations = modules[name]
+        kind, destinations = modules[name]
         send = True
-        if type == "%":
+        if kind == "%":
             if pulse == -1:
                 states[name] *= pulse
                 pulse = states[name]
             else:
                 send = False
-        elif type == "&":
+        elif kind == "&":
             states[name][source] = pulse
             pulse = -1 if sum(states[name].values()) == len(states[name].values()) else 1
         if send:

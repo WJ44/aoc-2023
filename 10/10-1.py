@@ -17,11 +17,7 @@ with open("./10/input.txt", "r", encoding="utf-8") as file:
                     r = row + offset[0]
                     c = column + offset[1]
                     if 0 <= r < len(grid) and 0 <= c < len(grid_row):
-                        if (
-                            grid[r][c] in connections
-                            and grid_item
-                            in connections_map[(-offset[0], -offset[1])]
-                        ):
+                        if grid[r][c] in connections and grid_item in connections_map[(-offset[0], -offset[1])]:
                             count += 1
                 if count != 2:
                     fronts.append((row, column))
@@ -32,11 +28,7 @@ with open("./10/input.txt", "r", encoding="utf-8") as file:
                 r = row + offset[0]
                 c = column + offset[1]
                 if 0 <= r < len(grid) and 0 <= c < len(grid[row]):
-                    if (
-                        grid[r][c] in connections
-                        and grid[row][column]
-                        in connections_map[(-offset[0], -offset[1])]
-                    ):
+                    if grid[r][c] in connections and grid[row][column] in connections_map[(-offset[0], -offset[1])]:
                         new_fronts.append((r, c))
             grid[row][column] = "."
         fronts = new_fronts

@@ -6,7 +6,7 @@ with open("./11/input.txt", "r", encoding="utf-8") as file:
     while i < len(grid):
         row = grid[i]
         if all(c == "." for c in row):
-            grid[i] = len(row)*[":"]
+            grid[i] = len(row) * [":"]
             i += 1
         i += 1
     i = 0

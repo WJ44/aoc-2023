@@ -37,7 +37,7 @@ with open("./19/input.txt", "r", encoding="utf-8") as file:
                     destination = instruction["destination"]
             if destination == "R":
                 break
-            elif destination == "A":
+            if destination == "A":
                 accepted.append(part)
                 break
             workflow = workflows[destination]
@@ -45,5 +45,5 @@ with open("./19/input.txt", "r", encoding="utf-8") as file:
 total = 0
 for part in accepted:
     total += sum(part.values())
-    
+
 print(total)

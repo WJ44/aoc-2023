@@ -3,10 +3,11 @@ import re
 accepted = []
 workflows = {}
 
+
 def process_workflow(parts, workflow):
     if workflow == "R":
         return
-    elif workflow == "A":
+    if workflow == "A":
         accepted.append(parts)
         return
     workflow = workflows[workflow]
@@ -31,30 +32,31 @@ def process_workflow(parts, workflow):
         else:
             process_workflow(parts, instruction["destination"])
 
+
 with open("./19/input.txt", "r", encoding="utf-8") as file:
     while (line := file.readline().rstrip()) != "":
-        name, instructions = re.match(r"(\w+){(.+)}", line).groups()
-        instructions = instructions.split(",")
+        name, insts = re.match(r"(\w+){(.+)}", line).groups()
+        insts = insts.split(",")
         processed = []
-        for instruction in instructions:
-            instruction = instruction.split(":")
-            if len(instruction) == 2:
-                category, comparator, value = re.match(r"([xmas])([<>])(\d+)", instruction[0]).groups()
-                condition = (category, comparator, int(value))
-                instruction = {"condition": condition, "destination": instruction[1]}
+        for inst in insts:
+            inst = inst.split(":")
+            if len(inst) == 2:
+                category, comparator, value = re.match(r"([xmas])([<>])(\d+)", inst[0]).groups()
+                cond = (category, comparator, int(value))
+                inst = {"condition": cond, "destination": inst[1]}
             else:
-                instruction = {"destination": instruction[0]}
-            processed.append(instruction)
+                inst = {"destination": inst[0]}
+            processed.append(inst)
         workflows[name] = processed
 
-parts = {"x": (1, 4000), "m": (1, 4000), "a": (1, 4000), "s": (1, 4000)}
-process_workflow(parts, "in")
+start_parts = {"x": (1, 4000), "m": (1, 4000), "a": (1, 4000), "s": (1, 4000)}
+process_workflow(start_parts, "in")
 
 total = 0
-for parts in accepted:
+for good_parts in accepted:
     subtotal = 1
-    for lower, upper in parts.values():
-        subtotal *= upper - lower + 1
+    for low, up in good_parts.values():
+        subtotal *= up - low + 1
     total += subtotal
 
 print(total)

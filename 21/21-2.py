@@ -4,12 +4,12 @@ width = 0
 height = 0
 
 with open("./21/input.txt", "r", encoding="utf-8") as file:
-    grid = [[c for c in line.rstrip()] for line in file]
-    for y in range(len(grid)):
-        for x in range(len(grid[y])):
-            if grid[y][x] == "#":
+    grid = [list(line.rstrip()) for line in file]
+    for y, row in enumerate(grid):
+        for x, item in enumerate(row):
+            if item == "#":
                 rocks.add((x, y))
-            elif grid[y][x] == "S":
+            elif item == "S":
                 start = (x, y)
     width = len(grid[0])
     height = len(grid)
@@ -21,15 +21,15 @@ last_count = 0
 for i in range(1000):
     neighbours = set()
     for x, y in frontier:
-        neighbours.add((x, y-1))
-        neighbours.add((x+1, y))
-        neighbours.add((x, y+1))
-        neighbours.add((x-1, y))
+        neighbours.add((x, y - 1))
+        neighbours.add((x + 1, y))
+        neighbours.add((x, y + 1))
+        neighbours.add((x - 1, y))
     new_plots = set()
     for x, y in neighbours:
         if (x, y) in last:
             continue
-        elif (x % width, y % height) not in rocks:
+        if (x % width, y % height) not in rocks:
             new_plots.add((x, y))
     last = frontier
     frontier = new_plots
@@ -48,4 +48,4 @@ for i in range(start, 26501365):
     interval = intervals[(i - start) % len(intervals)]
     current += previous_differences[(i - start) % len(previous_differences)] + interval
     previous_differences[(i - start) % len(previous_differences)] += interval
-print(i+1, current)
+print(current)

@@ -23,11 +23,7 @@ with open("./11/input.txt", "r", encoding="utf-8") as file:
                 galaxies.append((row, column))
 
 total = 0
-for distance in [
-    abs(g1[0] - g2[0]) + abs(g1[1] - g2[1]) if g1 != g2 else 0
-    for g1 in galaxies
-    for g2 in galaxies
-]:
+for distance in [abs(g1[0] - g2[0]) + abs(g1[1] - g2[1]) if g1 != g2 else 0 for g1 in galaxies for g2 in galaxies]:
     total += distance
 
 print(total // 2)
